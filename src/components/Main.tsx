@@ -1,5 +1,5 @@
-import React from 'react'
-import Post from './Hue'
+// import React from 'react'
+import Hue from './Hue'
 import PostHue from './PostHue'
 
 interface HueObject {
