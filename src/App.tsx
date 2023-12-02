@@ -14,6 +14,8 @@ function App() {
     {id: 6, color: '#ff6747', username: "abbieV", likes: 13},
   ]);
 
+  
+
   const addNewHue = (color:string ) => 
   {
       console.log(color)
@@ -21,13 +23,15 @@ function App() {
       setHues( [...hues, newHue ] );
   }
 
+  
+
   return (
-    <div className='flex bg-slate-800 h-screen'>
+    <div className='flex bg-slate-700 h-screen'>
       <Menu />
 
       <Main hues={hues} addHue= {addNewHue} />
 
-      <Profile />
+      <Profile hues={hues} addHue= {addNewHue} />
     </div>
   )
 }

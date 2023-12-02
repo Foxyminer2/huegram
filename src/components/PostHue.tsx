@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import kaylee from '/kaylee.jpg'
+// import kaylee from '/kaylee.jpg'
 import Hue from './Hue'
 
 interface Props{
