@@ -15,9 +15,6 @@ const Profile = () => {
             <img src={kaylee} alt="" className='rounded-full'/>
         </div>
 
-        
-
-       
 
     </div>
   )

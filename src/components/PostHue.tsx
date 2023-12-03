@@ -3,22 +3,26 @@ import React, { useState } from 'react'
 import Hue from './Hue'
 
 interface Props{
-    addHue: (color:string)=> void
+    addHue: (hex_code:string)=> void
 }
 
 const PostHue = (props:Props) => {
 
-    const[color, setColor] = useState('')
+    const[hex_code, setColor] = useState('')
 
   return (
-    <div className='flex flex-row p-4 justify-evenly gap-8'>
+    <div className='flex w-64 flex-row ml-40  rounded-lg justify-evenly pb-10 border-white border-2' style={{backgroundColor : hex_code}}>
 
-        <div className='flex flex-col w-full p-4 gap-4' style={{backgroundColor: color}}>
-            <input type="text" name="hue" id="hue" onChange={ (event) => setColor(event.target.value) } />
-            <a href="#" onClick={ () => props.addHue(color)  } className="btn bg-white text-cyan-950 text-center">Post</a>
-        </div>
+        <div className='flex flex-col w-full p-4 gap-4 max-h-24'>
+          
+            <input className='bg-white pl-2 border-black border-2 rounded-lg' type="text" name="hue" id="hue" onChange={ (event) => setColor(event.target.value) } />
 
-        <Hue hue={ {color, username:"kaylee", likes:3}} />
+            <div className='bg-black rounded-full flexbox justify-center text-center my-6 text-lg p-2'>
+              <a href="#" onClick={ () => props.addHue(hex_code)  } className="btn text-white ">Post</a>
+            </div>
+            </div>
+
+        {/* <Hue hue={ {hex_code, username:"kaylee", likes:3}} /> */}
 
     </div>
   )
