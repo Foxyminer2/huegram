@@ -8,7 +8,9 @@ import { useEffect, useState } from 'react'
 interface Hues {
   hex_code: string;
   username: string;
-  like: number;
+  id:number;
+  likes: number;
+  
 }
 
 function App() {

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from "react"
 // import kaylee from '/kaylee.jpg'
-import Hue from './Hue'
+// import Hue from './Hue'
 
 interface Props{
     addHue: (hex_code:string)=> void
