@@ -5,6 +5,7 @@ import PostHue from './PostHue'
 interface HueObject {
     hex_code: string,
     username: string,
+    id:number,
     likes: number
 }
 interface Props {
