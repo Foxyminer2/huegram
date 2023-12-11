@@ -1,42 +1,57 @@
-// import React from "react";
-
-interface HueObject {
-  hex_code: string;
-  username: string;
-  likes: number;
-}
+import { FaHeart } from "react-icons/fa";
+import HueObject from "../HueObject";
 
 interface Props {
   hue: HueObject;
+  toggleLike?: (id?:number)=> void
 }
 
-const Hue = (props: Props) => {
+const Hue = ({hue, toggleLike}: Props) => {
+  const getTextColor = (hexCode: string) => {
+    const r_num = parseInt(hexCode.slice(1, 3), 16);
+    const g_num = parseInt(hexCode.slice(3, 5), 16);
+    const b_num = parseInt(hexCode.slice(5, 7), 16);
+
+    const hue_intensity = r_num * 0.299 + g_num * 0.587 + b_num * 0.114;
+
+    return hue_intensity > 186 ? "#000000" : "#FFFFFF";
+  };
+
+  const textColor = getTextColor(hue.color);
+
+  
+
   return (
     <div
-      className="flex flex-col h-64 aspect-square rounded-3xl text-center justify-between items-center"
-      style={{ backgroundColor: props.hue.hex_code }}
+      className="flex flex-col h-48 aspect-square rounded-3xl text-center justify-center items-center mx-1 my-2 relative"
+      style={{ backgroundColor: hue.color, color: textColor }}
     >
-      <div className="bg-black mt-2 text-white flex w-auto p-2 text-center justify-center py-4 rounded-full">
-        <p className="text-xl">{props.hue.hex_code}</p>
-      </div>
-      {/* <p className="text-white text-2xl opacity-80">{props.hue.hex_code}</p> */}
-      <div className="flex flex-wrap w-16 px-10 py-2 rounded-full bg-white">
-        <span className="text-5xl -ml-7">20</span>
-        <span className=" text-lg -mt-1 -ml-6">Likes!</span>
-      </div>
-      
 
-      <div className="bg-black text-white flex w-full text-center justify-between p-2 rounded-b-2xl">
-        <button id="Like" className="text-4xl bg-green-200 p-1 rounded-full w-12">❤️</button>
-        <p className="text-xl m-2">{props.hue.username}</p>
-        <button id="Dislike" className="text-4xl bg-red-400 p-1 rounded-full w-12  ">X</button>
+      <div className="flex flex-col justify-start items-start flex-grow">
+        <p className="text-2xl opacity-80">{hue.color}</p>
+      </div>
+
+      <button
+        onClick={() => toggleLike && toggleLike(hue.id)}
+        className="mb-10"
+      >
+        
+        <FaHeart
+        className={hue.isLiked ? "text-red-600 text-5xl": "text-5xl"}
+        />
+
+      </button>
+
+      {/* <div className="bg-black text-white flex flex-wrap w-14 h-full justify-end ml-28 rounded-t-xl">
+          <p className="text-xl">{hue.likes} Likes</p>
+        </div> */}
+
+      <div className="bg-black text-white flex  w-full justify-evenly p-3 rounded-b-2xl">
+        <p className="text-xl">{hue.username}</p>
+        
       </div>
     </div>
-    
   );
-  
 };
-
-
 
 export default Hue;

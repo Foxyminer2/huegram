@@ -1,48 +1,36 @@
-// import React from 'react'
 import Hue from './Hue'
 import PostHue from './PostHue'
+import Title from '../Title'
+import HueObject from '../HueObject'
 
-interface HueObject {
-    hex_code: string,
-    username: string,
-    id:number,
-    likes: number
-}
 interface Props {
     hues: HueObject[],
-    addHue: (hex_code:string) => void
+    addHue: (color:string) => void
+    toggleLike: (id?:number)=> void
+    searchHues: (color:string) => void
 }
 
-const Main = (props : Props) => {
+const Main = ({hues, addHue, searchHues, toggleLike} : Props) => {
   return (
-    <div className='mt-8 flex flex-wrap w-full justify-start gap-8 overflow-y-auto  '>
-      <div className='bg-slate-800 w-96 font-thin italic'>
-        <span className='text-white text-5xl '>H</span>
-        <span className='text-blue-500 text-5xl flexbox align-middle px-2'>*</span>
-        <span className='text-white text-5xl'>U</span>
-        <span className='text-purple-500 text-5xl flexbox align-middle px-2'>*</span>
-        <span className='text-white text-5xl'>E</span>
-        <span className='text-red-500 text-5xl flexbox align-middle px-2'>*</span>
-        <span className='text-white text-5xl'>G</span>
-        <span className='text-green-500 text-5xl flexbox align-middle px-2'>*</span>
-        <span className='text-white text-5xl'>R</span>
-        <span className='text-teal-500 text-5xl flexbox align-middle px-2'>*</span>
-        <span className='text-white text-5xl'>A</span>
-        <span className='text-yellow-500 text-5xl flexbox align-middle px-2'>*</span>
-        <span className='text-white text-5xl'>M</span>
+    <div className='flex flex-col flex-grow bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 '>
+      <Title searchHues={searchHues}></Title>
+      <div className='flex flex-wrap justify-center'>
+      <PostHue addHue={addHue}/>
+      </div>
+      <div className="flex flex-wrap w-full justify-center gap-7 overflow-y-auto m-2">
+          <div className='grid grid-cols-5 gap-5 overflow-y-auto'>
+
+        {hues.map( (hue) => ( 
+          <Hue hue={hue} toggleLike={toggleLike}/>
+
+        ))}
+
+          </div>
+
         </div>
-        <PostHue addHue={props.addHue}/>
 
-
-        {props.hues.map(  (hue) => ( 
-            
-            <Hue hue={hue}/>
-       ))}
-
-        
-
-    </div>
+      </div>
   )
 }
 
-export default Main
+export default Main;

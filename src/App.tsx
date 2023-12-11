@@ -1,50 +1,53 @@
-import Menu from './components/Menu'
 import Main from './components/Main'
 import Profile from './components/Profile'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+import HueObject from './HueObject'
 
-
-interface Hues {
-  hex_code: string;
-  username: string;
-  id:number;
-  likes: number;
-  
-}
 
 function App() {
 
-  useEffect(() => {
-    axios 
-      .get<Hues[]>("https://greenegunnar.pythonanywhere.com/api/hues/")
-      .then((result)=> setHues(result.data));
-  },[]);
+  const [hues, setHues] = useState<HueObject[]>([]);
+  const [currentUser] = useState({
+    username: "@Austin_Applegate",
+    likes: 53,
+    hues: []
+  });
 
-  const [hues, setHues] = useState<Hues[]>([
-    
-  ]);
+  useEffect( ()=>
+  {
+    fetch('./hues.json')
+    .then( (res) => res.json() )
+    .then( (data) => setHues(data) ) 
+  }, [])
 
   
-
-  const addNewHue = (hex_code:string ) => 
+  const addNewHue = (color:string ) => 
   {
-      console.log(hex_code)
-      const newHue = {hex_code, username: "kaylee", id: hues[hues.length-1].id+1 , likes:0};
+      const newHue = {color, username: currentUser.username, id: hues.length+1, likes:0, isLiked: false};
       setHues( [newHue, ...hues ] );
   }
+  const toggleLikeForHue = (id?:number) => 
+  {
+      const newHues = [...hues]
+      const hue = newHues.find( h => h.id == id)
+      if(hue){
+        hue.isLiked = !hue.isLiked
+        setHues( newHues )
+      }
+  }
+  const searchHues = (colors:string) =>{
+    const newHues = [...hues];
+    const hue = newHues.filter( h => h.color == colors)
+    setHues(hue)
+  }
 
-  
 
   return (
-    
-    <div className='flex bg-slate-800 h-screen'>
+    <div className='flex bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 h-full'>
 
-      <Menu />
+      <Main hues={hues} addHue = {addNewHue} toggleLike = {toggleLikeForHue} searchHues={searchHues}/>
 
-      <Main hues={hues} addHue= {addNewHue} />
-
-      <Profile />
+      <Profile hues={hues} />
     </div>
   )
 }
